@@ -1,15 +1,15 @@
 import json
 from pprint import pprint
 
-def parse_real_time_data(file):
+def parse_real_time_data(file, output):
     data = json.load(open(file))
     #data['entity'] contains all the train time information
     d = data['entity']
     heading = "line,stop_id,arrival time"
     #parsing through the entities
     #increment by 2 because the odd ones don't have time data
-    for i in range(0, len(d), 2):
-        with open('output.csv','a') as f:
+    for i in range(0, len(d)):
+        with open(output,'a') as f:
             #attempting to only grab 1 train data
             line = "" #next line of the csv file
             label = "1" #train line that we want
@@ -57,5 +57,5 @@ def parse_timetable(file):
             f.write(add_line+"\n")
     f.close()
 
-parse_real_time_data('formatted_output.json')
-parse_timetable('saturday_timetable_north.txt')
+parse_real_time_data('sun.json', 'sun.csv')
+#parse_timetable('saturday_timetable_north.txt')
