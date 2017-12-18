@@ -57,5 +57,29 @@ def parse_timetable(file):
             f.write(add_line+"\n")
     f.close()
 
-parse_real_time_data('sun.json', 'sun.csv')
+def missing_times(start, end, interval):
+    start_hour = int(start.split(":")[0])
+    start_min = int(start.split(":")[1])
+    start_total = start_hour * 60 + start_min
+    end_hour = int(start.split(":")[0])
+    end_min = int(start.split(":")[1])
+    end_total = end_hour * 60 + end_min
+    times = []
+    cont = True
+    while(cont):
+        if(start_total > end_total or start_total + 3 > end_total):
+            cont = False
+            break
+        else:
+            start_total += interval
+            times[len(times)] = start_total
+    print(times)
+    for i in range(0, len(times)):
+        time = times[i]
+        hour = time / 60
+        minute = time % 60
+        print(str(hour) + ":" + str(minute) + "\n")
+
+missing_times("8:40", "11:58", 5)
+#parse_real_time_data('sun.json', 'sun.csv')
 #parse_timetable('saturday_timetable_north.txt')
