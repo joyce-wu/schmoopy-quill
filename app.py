@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import csv
 
 def csv_to_array(file):
     i=0
@@ -22,9 +23,6 @@ def csv_to_array(file):
 def create_time_table_sat(file):
     data = csv_to_array(file)
     group = len(data)
-    tot_row = 0
-    for l in range(group):
-        tot_row += len(data[l])
     row = len(data[0])
     column = 10
     new_row = []
@@ -57,9 +55,17 @@ def create_time_table_sat(file):
             prev_row = prev_row + i
         z+=1
         x+=1
-    print(table)
+    return table
 
-create_time_table_sat('sat_timetable_n.csv')
+def array_to_csv(array, file):
+    f = open(file, 'w+')
+    for row in range(len(array)):
+        for column in range(len(array[0])):
+            f.write(array[row][column]+',')
+        f.write("\n")
+    f.close()
+
+array_to_csv(create_time_table_sat('saturday/scheduled/sat_timetable_n.csv'), 'sat_n.csv')
 
 stops = {
     "142": "South Ferry",
