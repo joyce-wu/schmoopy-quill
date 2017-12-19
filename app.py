@@ -23,38 +23,44 @@ def csv_to_array(file):
 def create_time_table_sat(file):
     data = csv_to_array(file)
     group = len(data)
+    #numer of rows of first group
     row = len(data[0])
     column = 10
     new_row = []
-    z = 0
-    x = 0
+    current_group = 0
+    gaps = 0
     prev_row = 0
-    table = [[0 for x in range(column)] for y in range(row)]
-    while z < group:
+    table = [[0 for gaps in range(column)] for y in range(row)]
+    while current_group < group:
         a = 0
-        section = data[z]
+        section = data[current_group]
+        if current_group == 3:
+            section = section[0:-1]
         row = len(section)
-        if z == 0:
+        if current_group == 0:
             for i in range(row):
                 for y in range(column):
                     table[i][y] = section[i][y]
         else:
-            while a < row-1:
+            while a < row:
                 for y in range(column):
                     new_row.append(section[a][y])
                 a+=1
+                if(current_group == 2):
+                    print(str(a) + str(new_row))
                 table.append(new_row)
                 new_row = []
-        if x < 3:
-            end =  int((int(data[z+1][0][0])- int(section[len(section) -1][0]))/(60*8))
+        if gaps < 3:
+            end =  int((int(data[current_group+1][0][0])- int(section[len(section) -1][0]))/(60*8))
             for i in range(row-1, end):
                 for y in range(column):
                     new_row.append(str((int(table[i][y])+8*60)))
                 table.append(new_row)
                 new_row = []
             prev_row = prev_row + i
-        z+=1
-        x+=1
+        current_group+=1
+        gaps+=1
+    print(data[2])
     return table
 
 def array_to_csv(array, file):
