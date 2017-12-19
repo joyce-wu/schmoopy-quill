@@ -22,6 +22,9 @@ def csv_to_array(file):
 def create_time_table_sat(file):
     data = csv_to_array(file)
     group = len(data)
+    tot_row = 0
+    for l in range(group):
+        tot_row += len(data[l])
     row = len(data[0])
     column = 10
     new_row = []
@@ -30,26 +33,28 @@ def create_time_table_sat(file):
     prev_row = 0
     table = [[0 for x in range(column)] for y in range(row)]
     while z < group:
+        a = 0
         section = data[z]
-        row = len(data[z])
+        row = len(section)
         if z == 0:
             for i in range(row):
                 for y in range(column):
                     table[i][y] = section[i][y]
         else:
-            for i in range(prev_row-1 , prev_row + row):
+            while a < row-1:
                 for y in range(column):
-                    table[i][y] = section[i][y]
+                    new_row.append(section[a][y])
+                a+=1
+                table.append(new_row)
+                new_row = []
         if x < 3:
             end =  int((int(data[z+1][0][0])- int(section[len(section) -1][0]))/(60*8))
             for i in range(row-1, end):
                 for y in range(column):
-                    new_row.append(table[i][y]+str(8*60))
+                    new_row.append(str((int(table[i][y])+8*60)))
                 table.append(new_row)
                 new_row = []
             prev_row = prev_row + i
-            print(len(table[0]))
-            print(len(table))
         z+=1
         x+=1
     print(table)
