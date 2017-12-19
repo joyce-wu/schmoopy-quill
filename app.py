@@ -14,13 +14,19 @@ def csv_to_array(file):
 def create_time_table(file):
     row = 25
     column = 10
+    new_row = []
     table = [[0 for x in range(column)] for y in range(row)]
     data = csv_to_array(file)
     for i in range(row):
         for y in range(column):
             table[i][y] = data[i][y]
+    for i in range(9, 32):
+        for y in range(column):
+            new_row.append(table[i][y]+str(8*60))
+        table.append(new_row)
+        new_row = []
     print(table)
-    
+
 
 create_time_table('sat_timetable_s.csv')
 
