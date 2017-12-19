@@ -1,3 +1,30 @@
+import numpy as np
+import pandas as pd
+
+def csv_to_array(file):
+    f = open(file, 'r')
+    data = f.read()
+    lines = data.split("\n")
+    ret = []
+    for line in lines:
+        array = line.split(",")
+        ret.append(array)
+    return ret
+
+def create_time_table(file):
+    row = 25
+    column = 10
+    table = [[0 for x in range(column)] for y in range(row)]
+    data = csv_to_array(file)
+    for i in range(row):
+        for y in range(column):
+            table[i][y] = data[i][y]
+    print(table)
+    
+
+create_time_table('sat_timetable_s.csv')
+
+
 stops = {
     "142": "South Ferry",
     "137": "Chambers Street",
