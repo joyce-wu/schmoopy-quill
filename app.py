@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import copy
 import csv
 
 def csv_to_array(file):
@@ -30,7 +31,7 @@ def create_time_table_sat(file):
     current_group = 0
     gaps = 0
     prev_row = 0
-    table = [[0 for gaps in range(column)] for y in range(row)]
+    table = [[0 for x in range(column)] for y in range(row)]
     while current_group < group:
         a = 0
         section = data[current_group]
@@ -48,7 +49,9 @@ def create_time_table_sat(file):
                 a+=1
                 if(current_group == 2):
                     print(str(a) + str(new_row))
-                table.append(new_row)
+                r = copy.deepcopy(new_row)
+                print(r)
+                table.append(r)
                 new_row = []
         if gaps < 3:
             end =  int((int(data[current_group+1][0][0])- int(section[len(section) -1][0]))/(60*8))
@@ -58,8 +61,12 @@ def create_time_table_sat(file):
                 table.append(new_row)
                 new_row = []
             prev_row = prev_row + i
+        if(current_group == 2 or current_group == 3):
+            print("================table============")
+            print(table)
         current_group+=1
         gaps+=1
+    print("===========3rd section==============")
     print(data[2])
     return table
 
@@ -71,7 +78,7 @@ def array_to_csv(array, file):
         f.write("\n")
     f.close()
 
-array_to_csv(create_time_table_sat('saturday/scheduled/sat_timetable_n.csv'), 'sat_n.csv')
+array_to_csv(create_time_table_sat('saturday/scheduled/sat_timetable_s.csv'), 'sat_s.csv')
 
 stops = {
     "142": "South Ferry",
