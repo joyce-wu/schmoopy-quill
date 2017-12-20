@@ -80,11 +80,10 @@ def missing_times(start, end, interval):
         hour = time / 60
         minute = time % 60
         if minute < 10:
-            print(str(hour) + ":0" + str(minute))
-        elif hour > 12:
-            print(str(hour%12) + ":" + str(minute))
-        else:
-            print(str(hour) + ":" + str(minute))
+            minute = ":0" + str(minute)
+        if hour > 12:
+            hour = hour%12
+        print(str(hour) + ":" + str(minute))
 
 # print("===================  south ferry ================")
 # missing_times("7:51", "10:55", 8)
