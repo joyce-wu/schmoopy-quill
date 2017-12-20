@@ -40,20 +40,23 @@ def parse_timetable(file):
     base_time = 1513400400 #add to every time to convert to unix from 12/16/2017
     #train stops for 1 train
     heading = "South Ferry, Chambers St, 42 st, 59 st, 96 st, 137 st, 168 st, 231 st, 238 st, 242 st"
-    with open('sat_timetable_s.csv', 'a') as f:
+    with open('weekday_timetable_n.csv', 'a') as f:
         lines = data.split("\n")
         lines = lines[0:-1]
         for line in lines: #removes last empty newline
             add_line = "" #line to be added to csv
             times = line.split(" ") #creates list of times per line
             for time in times:
-                unix_time = base_time
-                hour = int(time.split(":")[0]) #retrieves hour and minute
-                minute = int(time.split(":")[1][0:2])
-                unix_time += hour*3600 + minute*60 #conversion to unix time
-                add_line += str(unix_time) + ","
+                if(time.strip() == '\xe2\x80\x94'):
+                    add_line += str(0) + ","
+                else:
+                    unix_time = base_time
+                    hour = int(time.split(":")[0]) #retrieves hour and minute
+                    minute = int(time.split(":")[1][0:2])
+                    unix_time += hour*3600 + minute*60 #conversion to unix time
+                    add_line += str(unix_time) + ","
             add_line = add_line[0:-1] #removes last comma
-            print(add_line)
+            #print(add_line)
             f.write(add_line+"\n")
     f.close()
 
@@ -80,70 +83,70 @@ def missing_times(start, end, interval):
         hour = time / 60
         minute = time % 60
         if minute < 10:
-            minute = ":0" + str(minute)
+            minute = "0" + str(minute)
         if hour > 12:
             hour = hour%12
         print(str(hour) + ":" + str(minute))
 
 # print("===================  south ferry ================")
-# missing_times("6:40", "10:56", 8)
+# missing_times("8:40", "11:58", 5)
 # print("===================12:005==============")
-# missing_times("12:00", "14:00", 8)
+# missing_times("12:40", "15:27", 6)
 # print("===================4:07================")
-# missing_times("3:04", "8:08", 8)
+# missing_times("3:56", "8:18", 4)
 # print("=================== chambers ===================")
-# missing_times("6:41", "10:57", 8)
+# missing_times("8:46", "12:02", 5)
 # print("===================12:04================")
-# missing_times("12:01", "14:01", 8)
+# missing_times("12:44", "15:32", 6)
 # print("===================4:12================")
-# missing_times("3:05", "8:09", 8)
+# missing_times("4:01", "8:23", 4)
 # print("===================42 st================")
-# missing_times("6:53", "11:09", 8)
+# missing_times("8:59", "12:15", 5)
 # print("===================12:17================")
-# missing_times("12:13", "14:13", 8)
+# missing_times("12:57", "15:44", 6)
 # print("===================4:25================")
-# missing_times("3:17", "8:21", 8)
+# missing_times("4:14", "8:36", 4)
 # print("===================59 st================")
-# missing_times("6:58", "11:14", 8)
+# missing_times("9:03", "12:19", 5)
 # print("===================12:21================")
-# missing_times("12:18", "14:18", 8)
+# missing_times("1:01", "3:48", 6)
 # print("===================4:29================")
-# missing_times("3:22", "8:26", 8)
+# missing_times("4:19", "8:40", 4)
 # print("===================96 st================")
-# missing_times("7:04", "11:20", 8)
+# missing_times("9:10", "12:26", 5)
 # print("===================12:28================")
-# missing_times("12:24", "14:24", 8)
+# missing_times("1:08", "3:56", 6)
 # print("===================4:36================")
-# missing_times("3:28", "8:32", 8)
+# missing_times("4:27", "8:47", 4)
 # print("===================137 st================")
-# missing_times("7:06", "11:22", 8)
+# missing_times("9:18", "12:35", 5)
 # print("===================12:37================")
-# missing_times("12:26", "14:26", 8)
+# missing_times("1:17", "4:04", 6)
 # print("===================4:45================")
-# missing_times("3:30", "8:34", 8)
+# missing_times("4:35", "8:55", 4)
 # print("===================168 st================")
-# missing_times("7:12", "11:28", 8)
+# missing_times("9:23", "12:40", 5)
 # print("===================12:42================")
-# missing_times("12:32", "14:32", 8)
+# missing_times("1:22", "4:09", 6)
 # print("===================4:50================")
-# missing_times("3:36", "8:40", 8)
+# missing_times("4:40", "9:00", 4)
 # print("===================231================")
-# missing_times("7:17", "11:33", 8)
+# missing_times("9:34", "12:50", 5)
 # print("===================12:52================")
-# missing_times("12:37", "14:37", 8)
+# missing_times("1:32", "4:20", 6)
 # print("===================5:00================")
-# missing_times("3:41", "8:45", 8)
+# missing_times("4:51", "9:11", 4)
 # print("===================238================")
-# missing_times("7:32", "11:48", 8)
+# missing_times("9:36", "12:54", 5)
 # print("===================12:56================")
-# missing_times("12:52", "14:52", 8)
+# missing_times("1:36", "4:22", 6)
 # print("===================5:04================")
-# missing_times("3:56", "9:00", 8)
+# missing_times("4:54", "9:12", 4)
 # print("===================242================")
-# missing_times("7:37", "11:53", 8)
+# missing_times("9:38", "12:56", 5)
 # print("===================12:58================")
-# missing_times("12:57", "14:57", 8)
+# missing_times("1:38", "4:23", 6)
 # print("===================5:06================")
-# missing_times("4:01", "9:05", 8)
+# missing_times("4:55", "9:14", 4)
 #parse_real_time_data('monday/actual/monday.json', 'monday/actual/monday.csv')
-parse_timetable('saturday_timetable_south.txt')
+parse_timetable('weekday_north.txt')
