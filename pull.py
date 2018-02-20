@@ -30,17 +30,18 @@ urls = {
 #updates at 11:59 every night to respective .json file
 def convert():
     #os.system("gtfs_realtime_json/dist/gtfs_realtime_json " +str(urls["1"])+ " > 1.json")
-    os.system("gtfs_realtime_json/dist/gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=1' > 1.json")
-    os.system("gtfs_realtime_json/dist/gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=26' > 26.json")
-    os.system("gtfs_realtime_json/dist/gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=16' > 16.json")
-    os.system("gtfs_realtime_json/dist/gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=21' > 21.json")
-    os.system("gtfs_realtime_json/dist/gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=2' > 2.json")
-    os.system("gtfs_realtime_json/dist/gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=31' > 31.json")
-    os.system("gtfs_realtime_json/dist/gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=36' > 36.json")
-    os.system("gtfs_realtime_json/dist/gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=51' > 51.json")
+    os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=1' > 1.json")
+    os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=26' > 26.json")
+    os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=16' > 16.json")
+    os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=21' > 21.json")
+    os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=2' > 2.json")
+    os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=31' > 31.json")
+    os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=36' > 36.json")
+    os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=51' > 51.json")
 
 def main():
     schedule.every().day.at("23:59").do(convert)
+    #convert()
 
 if __name__ == '__main__':
     main()
