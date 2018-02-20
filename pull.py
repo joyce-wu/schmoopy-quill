@@ -3,10 +3,21 @@ import time
 import urllib
 import os
 import subprocess
+import sqlite3
+import datetime
+import json
 
 #export PYTHONPATH="${PYTHONPATH}/usr/local/lib/python2.7/site-packages:/usr/lib/python2.7/site-packages"
 
 key = "233db5c5454f7a125d8e129aff2503d1"
+#deafult global date value
+date = ""
+
+db = sqlite3.connect('data.db')
+c = db.cursor()
+c.execute("CREATE TABLE IF NOT EXISTS data (mmddyyy TEXT, json BLOB)")
+db.commit()
+db.close()
 
 urls = {
     #1,2,3,4,5,6,S
@@ -39,9 +50,57 @@ def convert():
     os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=36' > 36.json")
     os.system("./gtfs_realtime_json 'http://datamine.mta.info/mta_esi.php?key=233db5c5454f7a125d8e129aff2503d1&feed_id=51' > 51.json")
 
+def fetch_date():
+    now = datetime.datetime.now()
+    global date
+    date = str(now.month) + "-" + str(now.day) + "-" + str(now.year)
+    print date
+
 def main():
+    global date
     schedule.every().day.at("23:59").do(convert)
+    schedule.every().day.at("23:59").do(fetch_date)
     #convert()
+    #fetch_date()
+
+    db = sqlite3.connect('data.db')
+    c = db.cursor()
+
+    with open('1.json') as json_data:
+        d = json.load(json_data)
+        json_data.close()
+        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
+    with open('26.json') as json_data:
+        d = json.load(json_data)
+        json_data.close()
+        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
+    with open('16.json') as json_data:
+        d = json.load(json_data)
+        json_data.close()
+        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
+    with open('21.json') as json_data:
+        d = json.load(json_data)
+        json_data.close()
+        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
+    with open('2.json') as json_data:
+        d = json.load(json_data)
+        json_data.close()
+        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
+    with open('31.json') as json_data:
+        d = json.load(json_data)
+        json_data.close()
+        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
+    with open('36.json') as json_data:
+        d = json.load(json_data)
+        json_data.close()
+        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
+    with open('51.json') as json_data:
+        d = json.load(json_data)
+        json_data.close()
+        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
+
+    db.commit()
+    db.close()
 
 if __name__ == '__main__':
     main()
