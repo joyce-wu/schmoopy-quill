@@ -1,5 +1,5 @@
 pull: pull.py
-	python pull.py
+	nohup python pull.py &
 
 clean:
 	rm 1.json
@@ -10,6 +10,7 @@ clean:
 	rm 31.json
 	rm 36.json
 	rm 51.json
+	rm nohup.out
 
 data:
 	rm data.db
