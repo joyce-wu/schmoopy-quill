@@ -56,16 +56,9 @@ def fetch_date():
     date = str(now.month) + "-" + str(now.day) + "-" + str(now.year)
     print date
 
-def main():
-    global date
-    schedule.every().day.at("23:59").do(convert)
-    schedule.every().day.at("23:59").do(fetch_date)
-    #convert()
-    #fetch_date()
-
+def add_db():
     db = sqlite3.connect('data.db')
     c = db.cursor()
-
     with open('1.json') as json_data:
         d = json.load(json_data)
         json_data.close()
@@ -98,9 +91,19 @@ def main():
         d = json.load(json_data)
         json_data.close()
         c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-
     db.commit()
     db.close()
+
+
+def main():
+    global date
+    schedule.every().day.at("23:59").do(convert)
+    #schedule.every().day.at("20:33").do(fetch_date)
+    #schedule.every().day.at("20:33").do(add_db)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 if __name__ == '__main__':
     main()

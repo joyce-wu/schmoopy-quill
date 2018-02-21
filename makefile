@@ -10,3 +10,6 @@ clean:
 	rm 31.json
 	rm 36.json
 	rm 51.json
+
+data:
+	rm data.db
