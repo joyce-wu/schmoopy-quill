@@ -2,22 +2,21 @@ import schedule
 import time
 import urllib
 import os
-import subprocess
-import sqlite3
 import datetime
 import json
+from pymongo import MongoClient
+from pprint import pprint
 
 #export PYTHONPATH="${PYTHONPATH}/usr/local/lib/python2.7/site-packages:/usr/lib/python2.7/site-packages"
+#using mongodb to handle adding json to database
+#testing
+
+client = MongoClient('lisa.stuy.edu', 27017)
+db = client.time #database is called time
 
 key = "233db5c5454f7a125d8e129aff2503d1"
-#deafult global date value
+#default global date value
 date = ""
-
-db = sqlite3.connect('data.db')
-c = db.cursor()
-c.execute("CREATE TABLE IF NOT EXISTS data (mmddyyy TEXT, json BLOB)")
-db.commit()
-db.close()
 
 urls = {
     #1,2,3,4,5,6,S
@@ -57,48 +56,12 @@ def fetch_date():
     print date
 
 def add_db():
-    db = sqlite3.connect('data.db')
-    c = db.cursor()
-    with open('1.json') as json_data:
-        d = json.load(json_data)
-        json_data.close()
-        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-    with open('26.json') as json_data:
-        d = json.load(json_data)
-        json_data.close()
-        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-    with open('16.json') as json_data:
-        d = json.load(json_data)
-        json_data.close()
-        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-    with open('21.json') as json_data:
-        d = json.load(json_data)
-        json_data.close()
-        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-    with open('2.json') as json_data:
-        d = json.load(json_data)
-        json_data.close()
-        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-    with open('31.json') as json_data:
-        d = json.load(json_data)
-        json_data.close()
-        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-    with open('36.json') as json_data:
-        d = json.load(json_data)
-        json_data.close()
-        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-    with open('51.json') as json_data:
-        d = json.load(json_data)
-        json_data.close()
-        c.execute("INSERT INTO data VALUES(?, ?)", (date,d))
-    db.commit()
-    db.close()
 
 
 def main():
     global date
     schedule.every().day.at("23:59").do(convert)
-    #schedule.every().day.at("20:33").do(fetch_date)
+    schedule.every().day.at("23:59").do(fetch_date)
     #schedule.every().day.at("20:33").do(add_db)
 
     while True:
