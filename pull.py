@@ -13,6 +13,10 @@ from pprint import pprint
 
 client = MongoClient('lisa.stuy.edu', 27017)
 db = client.time #database is called time
+col = db.data
+posts = db.posts
+#inserting posts
+#find w/ json files
 
 key = "233db5c5454f7a125d8e129aff2503d1"
 #default global date value
